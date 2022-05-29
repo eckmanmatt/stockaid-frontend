@@ -4,7 +4,25 @@ import './App.css';
 const App = () => {
   return (
     <>
-      <h1>hello world</h1>
+      <div className = 'header'>
+        <h1>hello world</h1>
+      </div>
+
+      <div className = 'portfolio'>
+        <section className = 'card'>
+          <ul>
+            <li></li>
+          </ul>
+        </section>
+      </div>
+
+      <div className = 'popular'>
+        <section className = 'card'>
+          <ul>
+            <li></li>
+          </ul>
+        </section>
+      </div>
     </>
   );
 }
