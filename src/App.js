@@ -3,12 +3,12 @@ import './App.css';
 
 const App = () => {
 
-  const [stock, setStock] = useState('')
-  const [symbol, setSymbol] = useState()
-  const [shortName,setShortName] = useState()
-  const [marketPrice, setMarketPrice] = useState()
-  const [marketChange, setMarketChange] = useState()
-
+  // const [stock, setStock] = useState('')
+  // const [symbol, setSymbol] = useState()
+  // const [shortName,setShortName] = useState()
+  // const [marketPrice, setMarketPrice] = useState()
+  // const [marketChange, setMarketChange] = useState()
+  //
 
   return (
     <>
