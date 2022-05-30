@@ -18,7 +18,7 @@ const App = () => {
       </div>
 
       <div className = 'addNew'>
-        <button>Add Ticker</button>
+        <button>Add New Ticker</button>
       </div>
 
       <div className = 'portfolio'>
