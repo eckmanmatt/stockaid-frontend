@@ -90,6 +90,8 @@ const handleUpdate = (event, stockData) => {
     }, 1000)
   }, [])
 
+  console.log(recommendations)
+
   return (
     <>
     <div className = 'header'>
