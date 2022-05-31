@@ -7,15 +7,15 @@ const App = () => {
 
   const [stock, setStock] = useState('')
   const [stocks, setStocks] = useState([])
-  // const [symbol, setSymbol] = useState()
-  // const [shortName,setShortName] = useState()
-  // const [marketPrice, setMarketPrice] = useState()
-  // const [marketChange, setMarketChange] = useState()
+  const [symbol, newSymbol] = useState()
+  const [shortName, newShortName] = useState()
+  const [marketPrice, newMarketPrice] = useState()
+  const [marketChange, newMarketChange] = useState()
 
 
   useEffect(() => {
   axios.get('https://stockaid-back-end.herokuapp.com/stocks').then((response) => {
-    setStock(response.data)
+    setStocks(response.data)
   })
 }, [])
 
@@ -76,9 +76,16 @@ const handleUpdate = (event, stockData) => {
       <h2>My Portfolio</h2>
       <section className = 'card'>
         <ul>
-          <li>test1</li>
-          <li>test2</li>
-          <li>test3</li>
+          {stocks.map((stock) => {
+            return <li>
+                    <h3>{stock.symbol}</h3>
+                    <h2>{stock.shortName}</h2>
+                    <h4>{stock.marketPrice}</h4>
+                    <h4>{stock.marketChange}</h4>
+                    <button onClick = {(event) => {deleteStock(stock)}}>Remove</button>
+                  </li>
+
+                })}
         </ul>
       </section>
     </div>
