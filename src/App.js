@@ -52,28 +52,30 @@ const handleNewStock = (event) => {
     setNewShortName(response.data.results[0].name)
   }).then((response) => {
     axios.request(`https://api.polygon.io/v2/aggs/ticker/${newSymbol}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then(function (response) {
-    console.log(response.data.results[0].c)
     setNewMarketPrice(response.data.results[0].c)
     setNewMarketChange((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)
   }).catch(function (error) {
     console.error(error);
-  }).then((response) => {
-    axios.post(
-      'https://stockaid-back-end.herokuapp.com/stocks',
-      {
-        symbol: newSymbol,
-        shortName: newShortName,
-        marketPrice: newMarketPrice,
-        marketChange: newMarketChange
-      }
-    ).then((response) => {
-      axios
-        .get('https://stockaid-back-end.herokuapp.com/stocks')
-        .then((response) => {
-            setStocks(response.data)
-        })
-    })
   })
+  })
+}
+
+const confirmStock = (event) => {
+  event.preventDefault()
+  axios.post(
+    'https://stockaid-back-end.herokuapp.com/stocks',
+    {
+      symbol: newSymbol,
+      shortName: newShortName,
+      marketPrice: newMarketPrice,
+      marketChange: newMarketChange
+    }
+  ).then((response) => {
+    axios
+      .get('https://stockaid-back-end.herokuapp.com/stocks')
+      .then((response) => {
+          setStocks(response.data)
+      })
   })
 }
 
@@ -130,6 +132,7 @@ const handleUpdate = (event, stockData) => {
         <input id='input' type="text" placeholder='Search for ticker.' onChange={handleInputStock}/>
         <input type='submit' value='Add Stock'/>
       </form>
+      <button onClick={confirmStock}>CONFIRM STOCK</button>
     </div>
 
     <div className = 'portfolio'>
