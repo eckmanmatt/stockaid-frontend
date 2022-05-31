@@ -14,30 +14,37 @@ const App = () => {
 
   return (
     <>
-      <div className = 'header'>
-        <h1>Stock[AID]</h1>
-        <h2>The Future of Stock Marketing</h2>
-      </div>
+    <div className = 'header'>
+      <h1>Stock[AID]</h1>
+      <h2>The Future of Personal Stock Management</h2>
+    </div>
 
-      <div className = 'addNew'>
-        <button>Add New Ticker</button>
-      </div>
+    <div className = 'addNew'>
+      <input id='input' type="text" placeholder='Search for ticker...'/>
+      <button id='button'>Add Ticker to Portfolio</button>
+    </div>
 
-      <div className = 'portfolio'>
-        <section className = 'card'>
-          <ul>
-            <li></li>
-          </ul>
-        </section>
-      </div>
+    <div className = 'portfolio'>
+      <h2>My Portfolio</h2>
+      <section className = 'card'>
+        <ul>
+          <li>test1</li>
+          <li>test2</li>
+          <li>test3</li>
+        </ul>
+      </section>
+    </div>
 
-      <div className = 'popular'>
-        <section className = 'card'>
-          <ul>
-            <li></li>
-          </ul>
-        </section>
-      </div>
+    <div className = 'popular'>
+      <h2>Most Popular</h2>
+      <section className = 'card'>
+        <ul>
+          <li>test1</li>
+          <li>test2</li>
+          <li>test3</li>
+        </ul>
+      </section>
+    </div>
     </>
   );
 }

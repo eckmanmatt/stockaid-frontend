@@ -6,6 +6,62 @@
   height: 40vmin;
   pointer-events: none;
 }
+body{
+  background-color: lightgrey;
+}
+.header{
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.header h1{
+  color: blue;
+}
+.header h2{
+  color: lightblue;
+}
+
+.addNew{
+  background: lightgrey;
+  display: flex;
+  justify-content: center;
+  border: 2px solid black;
+}
+.addNew #input{
+  margin: 10px;
+}
+.addNew #button{
+  margin: 10px;
+}
+
+.portfolio{
+  background-color: lightgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.portfolio ul{
+  background-color: lightgrey;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.popular{
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.popular ul{
+  background-color: grey;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+li{
+  list-style-type: none;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
