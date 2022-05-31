@@ -13,6 +13,7 @@ const App = () => {
   const [newMarketChange, setNewMarketChange] = useState()
 
 
+
   useEffect(() => {
   axios.get('https://stockaid-back-end.herokuapp.com/stocks').then((response) => {
     setStocks(response.data)
@@ -94,6 +95,7 @@ const handleUpdate = (event, stockData) => {
                     <h4>{stock.marketChange}</h4>
                     <button onClick = {(event) => {handleUpdate(stock)}}>Update</button>
                     <button onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
+
                   </li>
 
                 })}
