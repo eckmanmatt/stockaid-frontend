@@ -6,11 +6,13 @@ import axios from 'axios'
 const App = () => {
 
   const [stock, setStock] = useState('')
+  const [stocks, setStocks] = useState([])
   // const [symbol, setSymbol] = useState()
   // const [shortName,setShortName] = useState()
   // const [marketPrice, setMarketPrice] = useState()
   // const [marketChange, setMarketChange] = useState()
-  //
+
+
   useEffect(() => {
   axios.get('https://stockaid-back-end.herokuapp.com/stocks').then((response) => {
     setStock(response.data)
