@@ -11,8 +11,7 @@ const App = () => {
   const [newShortName, setNewShortName] = useState()
   const [newMarketPrice, setNewMarketPrice] = useState()
   const [newMarketChange, setNewMarketChange] = useState()
-
-
+  const [recommendations, setRecommendations] = useState()
 
   useEffect(() => {
   axios.get('https://stockaid-back-end.herokuapp.com/stocks').then((response) => {
@@ -70,6 +69,26 @@ const handleUpdate = (event, stockData) => {
     })
 }
 
+  const currentRecommendations = {
+    method: 'GET',
+    url: 'https://yh-finance.p.rapidapi.com/stock/v2/get-recommendations',
+    params: {symbol: 'INTC'},
+    headers: {
+      'X-RapidAPI-Host': 'yh-finance.p.rapidapi.com',
+      'X-RapidAPI-Key': '152e7614a5mshddc9b51e8ad6d57p19426ajsn47514aad2ad1'
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(async () => {
+      axios.request(currentRecommendations).then(function (response) {
+        setRecommendations(response.data.finance.result[0].quotes);
+        console.log(response.data.finance.result[0].quotes);
+      }).catch(function (error) {
+        console.error(error);
+      });
+    }, 1000)
+  }, [])
 
   return (
     <>
@@ -104,13 +123,18 @@ const handleUpdate = (event, stockData) => {
     </div>
 
     <div className = 'popular'>
-      <h2>Most Popular</h2>
+      <h2>Recommended Stocks</h2>
       <section className = 'card'>
-        <ul>
-          <li>test1</li>
-          <li>test2</li>
-          <li>test3</li>
-        </ul>
+      {recommendations.map((recommendation) => {
+          return (
+            <div>
+              <h3>{recommendation.symbol}</h3>
+              <h2>{recommendation.shortName}</h2>
+              <h4>{recommendation.regularMarketPrice}</h4>
+              <h4>{recommendation.regularMarketChange}</h4>
+            </div>
+          )
+        })}
       </section>
     </div>
     </>
