@@ -18,7 +18,6 @@ const App = () => {
   const options = {
   method: 'GET',
   url: 'https://yh-finance.p.rapidapi.com/stock/v2/get-summary',
-  params: {symbol: newSymbol},
   headers: {
     'X-RapidAPI-Host': 'yh-finance.p.rapidapi.com',
     'X-RapidAPI-Key': '314777666cmsha0de50e0f014d15p144d54jsn22d0daba111e'
