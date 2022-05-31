@@ -45,6 +45,7 @@ body{
   background-color: lightgrey;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
 }
 .popular{
@@ -83,6 +84,7 @@ li{
   border:1px solid grey;
   border-radius: 10px;
 }
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

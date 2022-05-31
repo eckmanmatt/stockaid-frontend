@@ -142,8 +142,10 @@ const handleUpdate = (event, stockData) => {
                     <h2>{stock.shortName}</h2>
                     <h4>Market Price:{stock.marketPrice}</h4>
                     <h4>Market Change: {stock.marketChange}</h4>
-                    <button onClick = {(event) => {handleUpdate(stock)}}>Update</button>
-                    <button onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
+                    <div id = 'cardButton'>
+                      <button onClick = {(event) => {handleUpdate(stock)}}>Update</button>
+                      <button onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
+                    </div>
                   </li>
 
                 })}
