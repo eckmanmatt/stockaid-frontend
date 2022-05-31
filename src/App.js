@@ -26,6 +26,47 @@ const App = () => {
   })
 }, [])
 
+
+const handleNewStock = (event) => {
+  event.preventDefault()
+  axios.post(
+      'https://stockaid-back-end.herokuapp.com/stocks',
+      {
+        symbol: newSymbol,
+        shortName: newShortName,
+        marketPrice: newMarketPrice,
+        marketChange: newMarketChange
+      }
+    ).then(() => {
+      axios
+        .get('https://stockaid-back-end.herokuapp.com/stocks')
+        .then((response) => {
+            setStock(response.data)
+        })
+    })
+}
+
+const handleUpdate = (event, stockData) => {
+  event.preventDefault()
+  axios
+    .put(`https://stockaid-back-end.herokuapp.com/stocks/${stockData._id}`,
+      {
+        symbol: newSymbol,
+        shortName: newShortName,
+        marketPrice: newMarketPrice,
+        marketChange: newMarketChange
+      }
+    ).then(() => {
+        axios
+          .get('https://stockaid-back-end.herokuapp.com/stocks')
+          .then((response) => {
+            console.log(response.data);
+              setStock(response.data)
+          })
+    })
+}
+
+
   return (
     <>
     <div className = 'header'>
