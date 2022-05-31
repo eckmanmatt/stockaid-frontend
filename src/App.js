@@ -7,24 +7,27 @@ const App = () => {
 
   const [stock, setStock] = useState('')
   const [stocks, setStocks] = useState([])
-  // const [symbol, setSymbol] = useState()
-  // const [shortName,setShortName] = useState()
-  // const [marketPrice, setMarketPrice] = useState()
-  // const [marketChange, setMarketChange] = useState()
+  const [newSymbol, setNewSymbol] = useState()
+  const [newShortName, setNewShortName] = useState()
+  const [newMarketPrice, setNewMarketPrice] = useState()
+  const [newMarketChange, setNewMarketChange] = useState()
 
-  const deleteStock = (stockData) => {
-    axios.delete(`https://stockaid-back-end.herokuapp.com/stocks/${stockData._id}`).then(() => {
-      axios.get('https://stockaid-back-end.herokuapp.com/stocks').then((response) => {
-        setStocks(response.data)
-      })
-    })
-  }
 
   useEffect(() => {
   axios.get('https://stockaid-back-end.herokuapp.com/stocks').then((response) => {
     setStocks(response.data)
   })
 }, [])
+
+const handleDeleteStock = (stockData) => {
+  axios.delete(`https://stockaid-back-end.herokuapp.com/stocks/${stockData._id}`)
+    .then(() => {
+      axios.get('https://stockaid-back-end.herokuapp.com/stocks')
+            .then((response) => {
+              setStocks(response.data)
+            })
+    })
+}
 
 
 const handleNewStock = (event) => {
@@ -41,7 +44,7 @@ const handleNewStock = (event) => {
       axios
         .get('https://stockaid-back-end.herokuapp.com/stocks')
         .then((response) => {
-            setStock(response.data)
+            setStocks(response.data)
         })
     })
 }
@@ -61,7 +64,7 @@ const handleUpdate = (event, stockData) => {
           .get('https://stockaid-back-end.herokuapp.com/stocks')
           .then((response) => {
             console.log(response.data);
-              setStock(response.data)
+              setStocks(response.data)
           })
     })
 }
@@ -89,7 +92,8 @@ const handleUpdate = (event, stockData) => {
                     <h2>{stock.shortName}</h2>
                     <h4>{stock.marketPrice}</h4>
                     <h4>{stock.marketChange}</h4>
-                    <button onClick = {(event) => {deleteStock(stock)}}>Remove</button>
+                    <button onClick = {(event) => {handleUpdate(stock)}}>Update</button>
+                    <button onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
                   </li>
 
                 })}
