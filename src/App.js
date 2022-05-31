@@ -25,7 +25,11 @@ const App = () => {
 };
 
 
-
+useEffect(() => {
+  axios.get('https://stockaid-back-end.herokuapp.com/stocks').then((response) => {
+    setStocks(response.data)
+  })
+}, [])
 
 
 const handleDeleteStock = (stockData) => {
