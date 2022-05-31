@@ -125,16 +125,16 @@ const handleUpdate = (event, stockData) => {
     <div className = 'popular'>
       <h2>Recommended Stocks</h2>
       <section className = 'card'>
-      {recommendations.map((recommendation) => {
-          return (
-            <div>
-              <h3>{recommendation.symbol}</h3>
-              <h2>{recommendation.shortName}</h2>
-              <h4>{recommendation.regularMarketPrice}</h4>
-              <h4>{recommendation.regularMarketChange}</h4>
-            </div>
-          )
-        })}
+        {recommendations.map((recommendation) => {
+            return (
+              <div>
+                <h3>{recommendation.symbol}</h3>
+                <h2>{recommendation.shortName}</h2>
+                <h4>{recommendation.regularMarketPrice}</h4>
+                <h4>{recommendation.regularMarketChange}</h4>
+              </div>
+            )
+          })}
       </section>
     </div>
     </>
