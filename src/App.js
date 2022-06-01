@@ -10,11 +10,18 @@ const App = () => {
   const [newMarketPrice, setNewMarketPrice] = useState()
   const [newMarketChange, setNewMarketChange] = useState()
   const [recommendations, setRecommendations] = useState()
+  const [recSymbol, setRecSymbol] = useState([])
+  const [recShortName, setRecShortName] = useState([])
+  const [recMarketPrice, setRecMarketPrice] = useState([])
+  const [recMarketChange, setRecMarketChange] = useState([])
   const [toggleConfirmationForm, setToggleConfirmationForm] = useState(false)
 
   useEffect(() => {
     axios.get('https://stockaid-back-end.herokuapp.com/stocks').then((response) => {
       setStocks(response.data)
+    })
+    axios.get('https://stockaid-back-end.herokuapp.com/recommendations').then((response) => {
+      setRecommendations(response.data)
     })
   }, [])
 
@@ -88,27 +95,6 @@ const App = () => {
       })
   }
 
-  // const currentRecommendations = {
-  //   method: 'GET',
-  //   url: 'https://yh-finance.p.rapidapi.com/stock/v2/get-recommendations',
-  //   params: {symbol: 'INTC'},
-  //   headers: {
-  //     'X-RapidAPI-Host': 'yh-finance.p.rapidapi.com',
-  //     'X-RapidAPI-Key': '152e7614a5mshddc9b51e8ad6d57p19426ajsn47514aad2ad1'
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setTimeout(async () => {
-  //     axios.request(currentRecommendations).then(function (response) {
-  //       setRecommendations(response.data.finance.result[0].quotes);
-  //       console.log(response.data.finance.result[0].quotes);
-  //     }).catch(function (error) {
-  //       console.error(error);
-  //     });
-  //   }, 1000)
-  // }, [])
-
   const handleToggleConfirmationForm = () => {
     if (toggleConfirmationForm) {
       setToggleConfirmationForm(false)
@@ -116,6 +102,19 @@ const App = () => {
       setToggleConfirmationForm(true)
     }
   }
+
+  // recommendations.map((recommendedStock) => {
+    // axios.request(`https://api.polygon.io/v3/reference/tickers?ticker=${recommendedStock.ticker}&active=true&sort=ticker&order=asc&limit=10&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then((response) => {
+    //   setRecShortName(recShortName.push(response.data.results[0].name))
+    // }).then((response) => {
+    //   axios.request(`https://api.polygon.io/v2/aggs/ticker/${recommendedStock.ticker}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then((response) => {
+    //     setRecMarketPrice(recMarketPrice.push(response.data.results[0].c))
+    //     setRecMarketChange(recMarketChange.push((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o))
+    // }).catch(function (error) {
+    //   console.error(error);
+    // })
+    // })
+  // })
 
   return (
     <>
@@ -170,10 +169,9 @@ const App = () => {
             {recommendations.map((recommendation) => {
               return (
                 <div>
-                  <h3>{recommendation.symbol}</h3>
-                  <h2>{recommendation.shortName}</h2>
-                  <h4>{recommendation.regularMarketPrice}</h4>
-                  <h4>{recommendation.regularMarketChange}</h4>
+                  <h3>{recommendation.ticker}</h3>
+                  <h2>{recommendation.name}</h2>
+                  <h4>Postion: #{recommendation.position}</h4>
                 </div>
               )
             })}
