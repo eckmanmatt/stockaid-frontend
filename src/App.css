@@ -26,17 +26,17 @@ body{
 
 .addNew #input{
   margin: 10px;
+  font-size: 20px;
 }
-
-.addNew #button{
-  margin: 10px;
+#queuedStock{
+  text-decoration: underline;
 }
 
 .portfolio{
   background-color: lightgrey;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: block;
+  flex-wrap: wrap;
+  width:100%
 }
 
 .portfolio ul{
@@ -47,7 +47,11 @@ body{
   align-items: center;
 }
 
-.popular{
+.card-container{
+  display: flex;
+}
+
+/* .popular{
   background-color: grey;
   display: flex;
   flex-direction: column;
@@ -60,7 +64,7 @@ body{
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-}
+} */
 
 li{
   list-style-type: none;
@@ -77,7 +81,7 @@ li{
   border: 1px solid grey;
   border-radius: 10px;
   width:250px;
-  height:300px;
+  height:auto;
 }
 
 .card h2{
