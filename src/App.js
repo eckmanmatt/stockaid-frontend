@@ -10,31 +10,38 @@ const App = () => {
   const [newMarketPrice, setNewMarketPrice] = useState()
   const [newMarketChange, setNewMarketChange] = useState()
   const [recommendations, setRecommendations] = useState()
+  const [toggleConfirmationForm, setToggleConfirmationForm] = useState(false)
+  const [editStock, setEditStock] = useState()
+  // const [updatedStock, setUpdatedStock] = useState()
   // const [recSymbol, setRecSymbol] = useState([])
   // const [recShortName, setRecShortName] = useState([])
   // const [recMarketPrice, setRecMarketPrice] = useState([])
   // const [recMarketChange, setRecMarketChange] = useState([])
-  const [toggleConfirmationForm, setToggleConfirmationForm] = useState(false)
   // const [toggleUpdateForm, setToggleUpdateForm] = useState(true)
-  const [editStock, setEditStock] = useState()
-  // const [updatedStock, setUpdatedStock] = useState()
+
 
   useEffect(() => {
-    axios.get('https://stockaid-back-end.herokuapp.com/stocks').then((response) => {
-      setStocks(response.data)
-    })
-    axios.get('https://stockaid-back-end.herokuapp.com/recommendations').then((response) => {
-      setRecommendations(response.data)
-    })
+    axios
+      .get('https://stockaid-back-end.herokuapp.com/stocks')
+      .then((response) => {
+        setStocks(response.data)
+      })
+    axios
+      .get('https://stockaid-back-end.herokuapp.com/recommendations')
+      .then((response) => {
+        setRecommendations(response.data)
+      })
   }, [])
 
 
   const handleDeleteStock = (stockData) => {
-    axios.delete(`https://stockaid-back-end.herokuapp.com/stocks/${stockData._id}`)
+    axios
+      .delete(`https://stockaid-back-end.herokuapp.com/stocks/${stockData._id}`)
       .then(() => {
-        axios.get('https://stockaid-back-end.herokuapp.com/stocks')
-              .then((response) => {
-                setStocks(response.data)
+        axios
+          .get('https://stockaid-back-end.herokuapp.com/stocks')
+          .then((response) => {
+            setStocks(response.data)
               })
       })
   }
@@ -45,36 +52,43 @@ const App = () => {
 
   const handleNewStock = (event) => {
     event.preventDefault()
-    axios.request(`https://api.polygon.io/v3/reference/tickers?ticker=${newSymbol}&active=true&sort=ticker&order=asc&limit=10&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then((response) => {
-      setNewShortName(response.data.results[0].name)
-    }).then((response) => {
-      axios.request(`https://api.polygon.io/v2/aggs/ticker/${newSymbol}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then(function (response) {
-      setNewMarketPrice(response.data.results[0].c)
-      setNewMarketChange((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)
-    }).catch(function (error) {
-      console.error(error);
-    })
-    })
+    axios
+      .request(`https://api.polygon.io/v3/reference/tickers?ticker=${newSymbol}&active=true&sort=ticker&order=asc&limit=10&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`)
+      .then((response) => {
+        setNewShortName(response.data.results[0].name)
+      })
+      .then((response) => {
+        axios
+          .request(`https://api.polygon.io/v2/aggs/ticker/${newSymbol}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`)
+          .then(function (response) {
+            setNewMarketPrice(response.data.results[0].c)
+            setNewMarketChange((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)
+          })
+          .catch(function (error) {
+            console.error(error);
+          })
+        })
     handleToggleConfirmationForm()
   }
 
   const confirmStock = (event) => {
     event.preventDefault()
-    axios.post(
-      'https://stockaid-back-end.herokuapp.com/stocks',
-      {
-        symbol: newSymbol,
-        shortName: newShortName,
-        marketPrice: newMarketPrice,
-        marketChange: newMarketChange
-      }
-    ).then((response) => {
-      axios
-        .get('https://stockaid-back-end.herokuapp.com/stocks')
-        .then((response) => {
+    axios
+      .post('https://stockaid-back-end.herokuapp.com/stocks',
+        {
+          symbol: newSymbol,
+          shortName: newShortName,
+          marketPrice: newMarketPrice,
+          marketChange: newMarketChange
+        }
+      )
+      .then((response) => {
+        axios
+          .get('https://stockaid-back-end.herokuapp.com/stocks')
+          .then((response) => {
             setStocks(response.data)
-        })
-    })
+          })
+      })
     handleToggleConfirmationForm()
   }
 
@@ -96,16 +110,22 @@ const App = () => {
 
   const assignEditStock = (stock) => {
     setEditStock(stock)
-    axios.request(`https://api.polygon.io/v3/reference/tickers?ticker=${newSymbol}&active=true&sort=ticker&order=asc&limit=10&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then((response) => {
-      setNewShortName(response.data.results[0].name)
-    }).then((response) => {
-      axios.request(`https://api.polygon.io/v2/aggs/ticker/${newSymbol}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then(function (response) {
-      setNewMarketPrice(response.data.results[0].c)
-      setNewMarketChange((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)
-    }).catch(function (error) {
-      console.error(error);
-    })
-    })
+    axios
+      .request(`https://api.polygon.io/v3/reference/tickers?ticker=${newSymbol}&active=true&sort=ticker&order=asc&limit=10&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`)
+      .then((response) => {
+        setNewShortName(response.data.results[0].name)
+      })
+      .then((response) => {
+        axios
+        .request(`https://api.polygon.io/v2/aggs/ticker/${newSymbol}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`)
+        .then(function (response) {
+          setNewMarketPrice(response.data.results[0].c)
+          setNewMarketChange((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)
+        })
+        .catch(function (error) {
+          console.error(error);
+        })
+      })
   }
 
   const handleToggleConfirmationForm = () => {
@@ -118,6 +138,7 @@ const App = () => {
 
   return (
     <>
+
     <div className = 'header'>
       <h1>Stock[AID]</h1>
       <h2>The Future of Personal Stock Management</h2>
@@ -125,12 +146,14 @@ const App = () => {
 
     <div className = 'addNew'>
       <form onSubmit={handleNewStock}>
-        <input id='input' type="text" placeholder='Search for ticker.' onChange={handleInputStock}/>
-        <input type='submit' value='Add Stock'/>
+        <input id='input' type="text" placeholder='Search for ticker...' onChange={handleInputStock}/>
+        <br/>
+        <input type='submit' value='Queue Stock'/>
       </form>
       {toggleConfirmationForm ?
         <div className='confirmation-form'>
-          <br />
+          <br/>
+          <h3 id='queuedStock'>Queued Stock</h3>
           <h3>{newSymbol}</h3>
           <h3>{newShortName}</h3>
           <h3>{newMarketPrice}</h3>
@@ -141,8 +164,8 @@ const App = () => {
     </div>
 
     <div className = 'portfolio'>
-      <h2>My Portfolio</h2>
-      <section>
+      <h2 id='portfolio-header'>My Portfolio</h2>
+      <div className='card-container'>
         {stocks.map((stock) => {
           return (
             <div className='card' key={stock._id}>
@@ -157,24 +180,26 @@ const App = () => {
             </div>
           )
         })}
-      </section>
+      </div>
     </div>
 
-    <div className = 'popular'>
-      <h2>Recommended Stocks</h2>
+    <div className = 'recommendations'>
+      <h2 id='recommendations-header'>Recommended Stocks</h2>
+        <div className='card-container'>
         {recommendations ?
-          <section className = 'card'>
+          <div className='rec-container'>
             {recommendations.map((recommendation) => {
               return (
-                <div key={recommendation._id}>
+                <div className = 'card' key={recommendation._id}>
                   <h3>{recommendation.ticker}</h3>
                   <h2>{recommendation.name}</h2>
                   <h4>Postion: #{recommendation.position}</h4>
                 </div>
               )
             })}
-          </section>
+          </div>
         : null}
+    </div>
     </div>
     </>
   );
