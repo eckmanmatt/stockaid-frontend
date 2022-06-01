@@ -31,12 +31,16 @@ body{
 #queuedStock{
   text-decoration: underline;
 }
+.addNew form{
+  text-align: center;
+}
 
 .portfolio{
   background-color: lightgrey;
   display: block;
   flex-wrap: wrap;
-  width:100%
+  width:100%;
+  text-align: center;
 }
 
 .portfolio ul{
@@ -47,29 +51,38 @@ body{
   align-items: center;
 }
 
-.card-container{
-  display: flex;
+
+
+.recommendations{
+  background-color: lightgrey;
+  display: block;
+  flex-wrap: wrap;
+  width:100%;
+  text-align:center;
 }
 
-/* .popular{
-  background-color: grey;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.popular ul{
-  background-color: grey;
+.recommendations ul{
+  background-color: lightgrey;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-} */
+}
+
 
 li{
   list-style-type: none;
 }
-
+.card-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.rec-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 .card{
   background-color: grey;
   color: white;

@@ -164,7 +164,7 @@ const App = () => {
     </div>
 
     <div className = 'portfolio'>
-      <h2>My Portfolio</h2>
+      <h2 id='portfolio-header'>My Portfolio</h2>
       <div className='card-container'>
         {stocks.map((stock) => {
           return (
@@ -183,21 +183,23 @@ const App = () => {
       </div>
     </div>
 
-    <div className = 'popular'>
-      <h2>Recommended Stocks</h2>
+    <div className = 'recommendations'>
+      <h2 id='recommendations-header'>Recommended Stocks</h2>
+        <div className='card-container'>
         {recommendations ?
-          <section className = 'card'>
+          <div className='rec-container'>
             {recommendations.map((recommendation) => {
               return (
-                <div key={recommendation._id}>
+                <div className = 'card' key={recommendation._id}>
                   <h3>{recommendation.ticker}</h3>
                   <h2>{recommendation.name}</h2>
                   <h4>Postion: #{recommendation.position}</h4>
                 </div>
               )
             })}
-          </section>
+          </div>
         : null}
+    </div>
     </div>
     </>
   );
