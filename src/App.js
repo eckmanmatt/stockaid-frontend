@@ -10,14 +10,14 @@ const App = () => {
   const [newMarketPrice, setNewMarketPrice] = useState()
   const [newMarketChange, setNewMarketChange] = useState()
   const [recommendations, setRecommendations] = useState()
-  const [recSymbol, setRecSymbol] = useState([])
-  const [recShortName, setRecShortName] = useState([])
-  const [recMarketPrice, setRecMarketPrice] = useState([])
-  const [recMarketChange, setRecMarketChange] = useState([])
+  // const [recSymbol, setRecSymbol] = useState([])
+  // const [recShortName, setRecShortName] = useState([])
+  // const [recMarketPrice, setRecMarketPrice] = useState([])
+  // const [recMarketChange, setRecMarketChange] = useState([])
   const [toggleConfirmationForm, setToggleConfirmationForm] = useState(false)
-  const [toggleUpdateForm, setToggleUpdateForm] = useState(false)
-
-  const [updatedStock, setUpdatedStock] = useState()
+  // const [toggleUpdateForm, setToggleUpdateForm] = useState(true)
+  const [editStock, setEditStock] = useState()
+  // const [updatedStock, setUpdatedStock] = useState()
 
   useEffect(() => {
     axios.get('https://stockaid-back-end.herokuapp.com/stocks').then((response) => {
@@ -41,10 +41,6 @@ const App = () => {
 
   const handleInputStock = (event) => {
     setNewSymbol(event.target.value)
-  }
-
-  const handleUpdatedStock = (event) => {
-    setUpdatedStock(event.target.value)
   }
 
   const handleNewStock = (event) => {
@@ -82,15 +78,11 @@ const App = () => {
     handleToggleConfirmationForm()
   }
 
-  const handleUpdate = (event) =>{
+  const handleUpdate = (event) => {
     // event.preventDefault()
-    axios.request(`https://api.polygon.io/v3/reference/tickers?ticker=${updatedStock}&active=true&sort=ticker&order=asc&limit=10&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then((response) => {
-      setNewShortName(response.data.results[0].name)
-      setNewMarketPrice(response.data.results[0].c)
-      setNewMarketChange((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o).then(() => {
-      axios.put(`https://stockaid-back-end.herokuapp.com/stocks/${stocks._id}`,
+    axios.put(`https://stockaid-back-end.herokuapp.com/stocks/${editStock._id}`,
         {
-          symbol: updatedStock,
+          symbol: newSymbol,
           shortName: newShortName,
           marketPrice: newMarketPrice,
           marketChange: newMarketChange
@@ -100,9 +92,21 @@ const App = () => {
               setStocks(response.data)
             })
         })
-    handleToggleUpdateForm()
+  }
+
+  const assignEditStock = (stock) => {
+    setEditStock(stock)
+    axios.request(`https://api.polygon.io/v3/reference/tickers?ticker=${newSymbol}&active=true&sort=ticker&order=asc&limit=10&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then((response) => {
+      setNewShortName(response.data.results[0].name)
+    }).then((response) => {
+      axios.request(`https://api.polygon.io/v2/aggs/ticker/${newSymbol}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then(function (response) {
+      setNewMarketPrice(response.data.results[0].c)
+      setNewMarketChange((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)
+    }).catch(function (error) {
+      console.error(error);
     })
-  })}
+    })
+  }
 
   const handleToggleConfirmationForm = () => {
     if (toggleConfirmationForm) {
@@ -111,27 +115,6 @@ const App = () => {
       setToggleConfirmationForm(true)
     }
   }
-  const handleToggleUpdateForm = () => {
-    if (toggleUpdateForm) {
-      setToggleUpdateForm(false)
-    } else {
-      setToggleUpdateForm(true)
-    }
-  }
-
-
-  // recommendations.map((recommendedStock) => {
-    // axios.request(`https://api.polygon.io/v3/reference/tickers?ticker=${recommendedStock.ticker}&active=true&sort=ticker&order=asc&limit=10&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then((response) => {
-    //   setRecShortName(recShortName.push(response.data.results[0].name))
-    // }).then((response) => {
-    //   axios.request(`https://api.polygon.io/v2/aggs/ticker/${recommendedStock.ticker}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`).then((response) => {
-    //     setRecMarketPrice(recMarketPrice.push(response.data.results[0].c))
-    //     setRecMarketChange(recMarketChange.push((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o))
-    // }).catch(function (error) {
-    //   console.error(error);
-    // })
-    // })
-  // })
 
   return (
     <>
@@ -160,29 +143,20 @@ const App = () => {
     <div className = 'portfolio'>
       <h2>My Portfolio</h2>
       <section>
-        <ul>
-          {stocks.map((stock) => {
-            return (
-              <li className='card' key={stock._id}>
-                <h3>{stock.symbol}</h3>
-                <h2>{stock.shortName}</h2>
-                <h4>Market Price: {stock.marketPrice}</h4>
-                <h4>Market Change: {stock.marketChange}</h4>
-                <div id = 'cardButton'>
-                {toggleUpdateForm ?
-                  <>
-                  New Ticker: <input type="text"  onKeyUp={handleUpdatedStock}/><br/>
-                  <button onClick={(event) => {handleUpdate(stock)}}>Confirm Update</button><br/></>  :
-                  <>
-                  </>
-                }
-                <button onClick = {(event) => {handleToggleUpdateForm(stock)}}>Update</button>
-                <button onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
-                </div>
-              </li>
-            )
-          })}
-        </ul>
+        {stocks.map((stock) => {
+          return (
+            <div className='card' key={stock._id}>
+              <h3>{stock.symbol}</h3>
+              <h2>{stock.shortName}</h2>
+              <h4>Market Price: {stock.marketPrice}</h4>
+              <h4>Market Change: {stock.marketChange}</h4>
+              <input type="text" placeholder="Enter new ticker" onChange={handleInputStock} />
+              <button onClick={(event) => {assignEditStock(stock)}}>Change Stock</button>
+              <button onClick={handleUpdate}>CONFIRM</button>
+              <button onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
+            </div>
+          )
+        })}
       </section>
     </div>
 
@@ -192,7 +166,7 @@ const App = () => {
           <section className = 'card'>
             {recommendations.map((recommendation) => {
               return (
-                <div>
+                <div key={recommendation._id}>
                   <h3>{recommendation.ticker}</h3>
                   <h2>{recommendation.name}</h2>
                   <h4>Postion: #{recommendation.position}</h4>
