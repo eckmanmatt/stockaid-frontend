@@ -53,6 +53,7 @@ const App = () => {
     setNewShortName()
     setNewMarketPrice()
     setNewMarketChange()
+    setToggleConfirmationForm(false)
   }
 
   const handleNewStock = (event) => {
@@ -270,7 +271,7 @@ const App = () => {
                       <h3>{recommendation.ticker}</h3>
                       <h2>{recommendation.name}</h2>
                       <h4>Position: #{recommendation.position}</h4>
-                      <button className='btn btn-outline-primary' onMouseOver={handleNewStock} onClick={confirmStock}>Add To Portfolio</button>
+                      <button className='btn btn-outline-primary' onMouseDown={handleNewStock} onClick={confirmStock}>Add To Portfolio</button>
                     </div>
                   </div>
                 </div>
