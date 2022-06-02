@@ -44,6 +44,17 @@ const App = () => {
     setNewSymbol(event.target.value.toUpperCase())
   }
 
+  const handleAddStock = (recommendationData) => {
+    setNewSymbol(recommendationData.ticker)
+  }
+
+  const handleMouseOut = () => {
+    setNewSymbol()
+    setNewShortName()
+    setNewMarketPrice()
+    setNewMarketChange()
+  }
+
   const handleNewStock = (event) => {
     event.preventDefault()
     axios
@@ -209,34 +220,32 @@ const App = () => {
       <div className='card-deck bg-dark'>
         {stocks.map((stock) => {
           return (
-              <div className='col-4'>
-                <div className='card text-center mx-5 my-3 rounded' key={stock._id}>
+              <div className='col-4 p-0 m-2'>
+                <div className='card text-center m-5' key={stock._id}>
                   <div className='card-body'>
                     <h3>{stock.symbol}</h3>
                     <h2>{stock.shortName}</h2>
                     <h4>Market Price: ${stock.marketPrice}</h4>
                     <h4>Market Change: {stock.marketChange}%</h4>
-                    <div id ='buttons' className='h-auto w-20'>
-                      <button className='btn btn-outline-warning m-1' onClick={(event) => {toggleEditForm(stock)}}>
-                      {stock._id === editStock._id ?
-                        seeEditForm ?
-                          <span className='lnr lnr-cross-circle'> Cancel Changes</span>
-                          : "Edit"
-                          : <span className='lnr lnr-pencil h-auto'> Edit</span>}
-                          </button>
-                      {stock._id === editStock._id ?
-                        seeEditForm ?
-                          <>
-                            <input type="text" placeholder="Enter new ticker" onChange={handleInputStock} />
-                            {seeConfirmEdit ?
-                              <button className='btn btn-success lnr lnr-thumbs-up m-1' onClick={handleUpdate}> Confirm Update</button>
-                              : <button className='btn btn-outline-primary lnr lnr-sync m-1' onClick={(event) => {assignEditStock(stock)}}> Queue Update</button>}
-                              </>
-                              : null
-                              : null
-                            }
-                            <button className='btn btn-outline-danger lnr lnr-trash m-1 h-20' onClick = {(event) => {handleDeleteStock(stock)}}> Delete</button>
-                    </div>
+                    <button className='btn btn-outline-warning m-1' onClick={(event) => {toggleEditForm(stock)}}>
+                    {stock._id === editStock._id ?
+                      seeEditForm ?
+                        <span className='lnr lnr-cross-circle'> Cancel Changes</span>
+                        : "Edit"
+                        : <span className='lnr lnr-pencil'> Edit</span>}
+                        </button>
+                    {stock._id === editStock._id ?
+                      seeEditForm ?
+                        <>
+                          <input type="text" placeholder="Enter new ticker" onChange={handleInputStock} />
+                          {seeConfirmEdit ?
+                            <button className='btn btn-success lnr lnr-thumbs-up m-1' onClick={handleUpdate}> Confirm Update</button>
+                            : <button className='btn btn-outline-primary lnr lnr-sync m-1' onClick={(event) => {assignEditStock(stock)}}> Queue Update</button>}
+                            </>
+                            : null
+                            : null
+                          }
+                          <button className='btn btn-outline-danger lnr lnr-trash m-1' onClick = {(event) => {handleDeleteStock(stock)}}> Delete</button>
                   </div>
                 </div>
               </div>
@@ -255,18 +264,18 @@ const App = () => {
         {recommendations ?
             recommendations.map((recommendation) => {
               return (
-                <div className='col-4 m-0 p-3'>
-                  <div className ='card text-center w-auto h-100' key={recommendation._id}>
-                    <div className='card-body p-0'>
+                <div className='col-3 m-0 p-3'>
+                  <div className ='card text-center w-auto h-auto' key={recommendation._id}>
+                    <div className='card-body p-1 h-auto' onMouseOver={(event) => {handleAddStock(recommendation)}} onMouseOut={handleMouseOut}>
                       <h3>{recommendation.ticker}</h3>
                       <h2>{recommendation.name}</h2>
                       <h4>Position: #{recommendation.position}</h4>
+                      <button className='btn btn-outline-primary' onMouseOver={handleNewStock} onClick={confirmStock}>Add To Portfolio</button>
                     </div>
                   </div>
                 </div>
               )
             })
-
         : null}
       </div>
     </div>
