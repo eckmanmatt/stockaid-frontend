@@ -182,11 +182,11 @@ const App = () => {
       {toggleConfirmationForm ?
         <div className='confirmation-form'>
           <br/>
-          <h3 id='queuedStock'>Queued Stock</h3>
-          <h3>{newSymbol}</h3>
-          <h3>{newShortName}</h3>
-          <h3>{newMarketPrice}</h3>
-          <h3>{newMarketChange}</h3>
+          <h3 id='queued-stock'>Queued Stock</h3>
+          <h3 id='queued-details'>{newSymbol}</h3>
+          <h3 id='queued-details'>{newShortName}</h3>
+          <h3 id='queued-details'>{newMarketPrice}</h3>
+          <h3 id='queued-details'>{newMarketChange}</h3>
           <button onClick={confirmStock}>CONFIRM STOCK</button>
           <button onClick={handleToggleConfirmationForm}>CANCEL</button>
         </div>
@@ -205,8 +205,8 @@ const App = () => {
               <h4>Market Change: {stock.marketChange}</h4>
               <button onClick={(event) => {toggleEditForm(stock)}}>
                 {stock._id === editStock._id ?
-                  seeEditForm ? 
-                    "Cancel Changes" 
+                  seeEditForm ?
+                    "Cancel Changes"
                   : "Edit"
                 : "Edit"}
               </button>
@@ -219,7 +219,7 @@ const App = () => {
                     : <button onClick={(event) => {assignEditStock(stock)}}>Change Stock</button>}
                   </>
                 : null
-              : null }              
+              : null }
               <button onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
             </div>
           )
