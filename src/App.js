@@ -41,7 +41,7 @@ const App = () => {
   }
 
   const handleInputStock = (event) => {
-    setNewSymbol(event.target.value)
+    setNewSymbol(event.target.value.toUpperCase())
   }
 
   const handleNewStock = (event) => {
