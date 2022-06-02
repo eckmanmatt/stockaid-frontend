@@ -44,6 +44,17 @@ const App = () => {
     setNewSymbol(event.target.value.toUpperCase())
   }
 
+  const handleAddStock = (recommendationData) => {
+    setNewSymbol(recommendationData.ticker)
+  }
+
+  const handleMouseOut = () => {
+    setNewSymbol()
+    setNewShortName()
+    setNewMarketPrice()
+    setNewMarketChange()
+  }
+
   const handleNewStock = (event) => {
     event.preventDefault()
     axios
@@ -255,16 +266,16 @@ const App = () => {
               return (
                 <div className='col-4 m-0 p-3'>
                   <div className ='card text-center w-auto h-100' key={recommendation._id}>
-                    <div className='card-body p-0'>
+                    <div className='card-body p-0' onMouseOver={(event) => {handleAddStock(recommendation)}} onMouseOut={handleMouseOut}>
                       <h3>{recommendation.ticker}</h3>
                       <h2>{recommendation.name}</h2>
                       <h4>Position: #{recommendation.position}</h4>
+                      <button className='btn btn-outline-primary' onMouseOver={handleNewStock} onClick={confirmStock}>Add To Portfolio</button>
                     </div>
                   </div>
                 </div>
               )
             })
-
         : null}
       </div>
     </div>
