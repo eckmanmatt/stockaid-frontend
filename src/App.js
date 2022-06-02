@@ -148,7 +148,7 @@ const App = () => {
       setNewMarketPrice()
       setNewMarketChange()
       setSeeEditForm(false)
-      toggleConfirmEdit()
+      setSeeConfirmEdit(false)
     } else {
       setEditStock(stock)
       setSeeEditForm(true)
