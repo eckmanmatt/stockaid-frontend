@@ -175,12 +175,12 @@ const App = () => {
 
     <div className = 'container text-center addNew my-1'>
       <div className='row'>
-        <div className='col-4 mx-auto'>
+        <div className='col-4 mx-auto my-1'>
         {!toggleConfirmationForm ?
           <form onSubmit={handleNewStock}>
-            <div className='form-group'>
-            <input className='form-control' id='input' type="text" placeholder='Search for ticker...' onChange={handleInputStock}/>
-            <input className='btn btn-outline-primary' type='submit' value='Queue Stock'/>
+            <div className='form-group my-1'>
+            <input className='form-control my-1' id='input' type="text" placeholder='Search to add ticker...' onChange={handleInputStock}/>
+            <button className='btn btn-outline-primary lnr lnr-sync my-1' type='submit'> Queue Stock</button>
             </div>
           </form>
         : null}
@@ -192,8 +192,8 @@ const App = () => {
             <h3 id='queued-details'>{newShortName}</h3>
             <h3 id='queued-details'>{newMarketPrice}</h3>
             <h3 id='queued-details'>{newMarketChange}</h3>
-            <button className='btn btn-success' onClick={confirmStock}>CONFIRM STOCK</button>
-            <button className='btn btn-danger' onClick={handleToggleConfirmationForm}>CANCEL</button>
+            <button className='btn btn-success lnr lnr-download' onClick={confirmStock}>CONFIRM STOCK</button>
+            <button className='btn btn-danger lnr lnr-cross-circle' onClick={handleToggleConfirmationForm}>CANCEL</button>
           </div>
         : null}
         </div>
@@ -203,7 +203,7 @@ const App = () => {
 
     <div className='portfolio'>
       <div className = 'jumbotron jumbotron-fluid text-center py-5 my-0'>
-        <h2 id='portfolio-header'>My Portfolio</h2>
+        <h2 className='m-0 p-0' id='portfolio-header'>My Portfolio</h2>
       </div>
 
       <div className='card-deck bg-dark'>
@@ -216,25 +216,25 @@ const App = () => {
                     <h2>{stock.shortName}</h2>
                     <h4>Market Price: ${stock.marketPrice}</h4>
                     <h4>Market Change: {stock.marketChange}%</h4>
-                    <button className='btn btn-outline-warning' onClick={(event) => {toggleEditForm(stock)}}>
+                    <button className='btn btn-outline-warning m-1' onClick={(event) => {toggleEditForm(stock)}}>
                     {stock._id === editStock._id ?
                       seeEditForm ?
-                        "Cancel Changes"
+                        <span className='lnr lnr-cross-circle'> Cancel Changes</span>
                         : "Edit"
-                        : "Edit"}
+                        : <span className='lnr lnr-pencil'> Edit</span>}
                         </button>
                     {stock._id === editStock._id ?
                       seeEditForm ?
                         <>
                           <input type="text" placeholder="Enter new ticker" onChange={handleInputStock} />
                           {seeConfirmEdit ?
-                            <button className='btn btn-success' onClick={handleUpdate}>CONFIRM</button>
-                            : <button className='btn btn-outline-primary' onClick={(event) => {assignEditStock(stock)}}>Change Stock</button>}
+                            <button className='btn btn-success lnr lnr-thumbs-up m-1' onClick={handleUpdate}> Confirm Update</button>
+                            : <button className='btn btn-outline-primary lnr lnr-sync m-1' onClick={(event) => {assignEditStock(stock)}}> Queue Update</button>}
                             </>
                             : null
                             : null
                           }
-                          <button className='btn btn-outline-danger' onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
+                          <button className='btn btn-outline-danger lnr lnr-trash m-1' onClick = {(event) => {handleDeleteStock(stock)}}> Delete</button>
                   </div>
                 </div>
               </div>
