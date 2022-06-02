@@ -59,16 +59,17 @@ const App = () => {
   const handleNewStock = (event) => {
     event.preventDefault()
     axios
-      .request(`https://api.polygon.io/v3/reference/tickers?ticker=${newSymbol}&active=true&sort=ticker&order=asc&limit=10&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`)
+      .request(`https://stockaid-back-end.herokuapp.com/api/one/${newSymbol}`)
       .then((response) => {
-        setNewShortName(response.data.results[0].name)
+        setNewShortName(JSON.parse(response.data.body).results[0].name)
       })
       .then((response) => {
         axios
-          .request(`https://api.polygon.io/v2/aggs/ticker/${newSymbol}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`)
+          .request(`https://stockaid-back-end.herokuapp.com/api/two/${newSymbol}`)
           .then(function (response) {
-            setNewMarketPrice(response.data.results[0].c)
-            setNewMarketChange((((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)*100).toFixed(2))
+            setNewMarketPrice(JSON.parse(response.data.body).results[0].c)
+            // console.log(JSON.parse(response.data.body).results[0].c)
+            setNewMarketChange((((JSON.parse(response.data.body).results[0].c - JSON.parse(response.data.body).results[0].o) / JSON.parse(response.data.body).results[0].o)*100).toFixed(2))
           })
           .catch(function (error) {
             console.error(error);
@@ -122,16 +123,17 @@ const App = () => {
   const assignEditStock = (stock) => {
     setEditStock(stock)
     axios
-      .request(`https://api.polygon.io/v3/reference/tickers?ticker=${newSymbol}&active=true&sort=ticker&order=asc&limit=10&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`)
+      .request(`https://stockaid-back-end.herokuapp.com/api/one/${newSymbol}`)
       .then((response) => {
-        setNewShortName(response.data.results[0].name)
+        setNewShortName(JSON.parse(response.data.body).results[0].name)
       })
       .then((response) => {
         axios
-        .request(`https://api.polygon.io/v2/aggs/ticker/${newSymbol}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`)
+        .request(`https://stockaid-back-end.herokuapp.com/api/two/${newSymbol}`)
         .then(function (response) {
-          setNewMarketPrice(response.data.results[0].c)
-          setNewMarketChange((((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)*100).toFixed(2))
+          setNewMarketPrice(JSON.parse(response.data.body).results[0].c)
+            // console.log(JSON.parse(response.data.body).results[0].c)
+            setNewMarketChange((((JSON.parse(response.data.body).results[0].c - JSON.parse(response.data.body).results[0].o) / JSON.parse(response.data.body).results[0].o)*100).toFixed(2))
         })
         .catch(function (error) {
           console.error(error);
