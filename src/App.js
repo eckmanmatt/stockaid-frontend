@@ -11,14 +11,9 @@ const App = () => {
   const [newMarketChange, setNewMarketChange] = useState()
   const [recommendations, setRecommendations] = useState()
   const [toggleConfirmationForm, setToggleConfirmationForm] = useState(false)
-  const [editStock, setEditStock] = useState()
-  // const [updatedStock, setUpdatedStock] = useState()
-  // const [recSymbol, setRecSymbol] = useState([])
-  // const [recShortName, setRecShortName] = useState([])
-  // const [recMarketPrice, setRecMarketPrice] = useState([])
-  // const [recMarketChange, setRecMarketChange] = useState([])
-  // const [toggleUpdateForm, setToggleUpdateForm] = useState(true)
-
+  const [editStock, setEditStock] = useState({_id: null})
+  const [seeEditForm, setSeeEditForm] = useState(false)
+  const [seeConfirmEdit, setSeeConfirmEdit] = useState(false)
 
   useEffect(() => {
     axios
@@ -32,7 +27,6 @@ const App = () => {
         setRecommendations(response.data)
       })
   }, [])
-
 
   const handleDeleteStock = (stockData) => {
     axios
@@ -93,7 +87,6 @@ const App = () => {
   }
 
   const handleUpdate = (event) => {
-    // event.preventDefault()
     axios.put(`https://stockaid-back-end.herokuapp.com/stocks/${editStock._id}`,
         {
           symbol: newSymbol,
@@ -106,6 +99,12 @@ const App = () => {
               setStocks(response.data)
             })
         })
+    toggleConfirmEdit()
+    toggleEditForm()
+    setNewSymbol()
+    setNewShortName()
+    setNewMarketPrice()
+    setNewMarketChange()
   }
 
   const assignEditStock = (stock) => {
@@ -126,13 +125,41 @@ const App = () => {
           console.error(error);
         })
       })
+    toggleConfirmEdit()
   }
 
   const handleToggleConfirmationForm = () => {
     if (toggleConfirmationForm) {
+      setNewSymbol()
+      setNewShortName()
+      setNewMarketPrice()
+      setNewMarketChange()
       setToggleConfirmationForm(false)
     } else {
       setToggleConfirmationForm(true)
+    }
+  }
+
+  const toggleEditForm = (stock) => {
+    if (seeEditForm) {
+      setEditStock({_id: null})
+      setNewSymbol()
+      setNewShortName()
+      setNewMarketPrice()
+      setNewMarketChange()
+      setSeeEditForm(false)
+      toggleConfirmEdit()
+    } else {
+      setEditStock(stock)
+      setSeeEditForm(true)
+    }
+  }
+
+  const toggleConfirmEdit = () => {
+    if (seeConfirmEdit) {
+      setSeeConfirmEdit(false)
+    } else {
+      setSeeConfirmEdit(true)
     }
   }
 
@@ -145,11 +172,13 @@ const App = () => {
     </div>
 
     <div className = 'addNew'>
-      <form onSubmit={handleNewStock}>
-        <input id='input' type="text" placeholder='Search for ticker...' onChange={handleInputStock}/>
-        <br/>
-        <input type='submit' value='Queue Stock'/>
-      </form>
+      {!toggleConfirmationForm ?
+        <form onSubmit={handleNewStock}>
+          <input id='input' type="text" placeholder='Search for ticker...' onChange={handleInputStock}/>
+          <br/>
+          <input type='submit' value='Queue Stock'/>
+        </form>
+      : null}
       {toggleConfirmationForm ?
         <div className='confirmation-form'>
           <br/>
@@ -159,6 +188,7 @@ const App = () => {
           <h3>{newMarketPrice}</h3>
           <h3>{newMarketChange}</h3>
           <button onClick={confirmStock}>CONFIRM STOCK</button>
+          <button onClick={handleToggleConfirmationForm}>CANCEL</button>
         </div>
       : null}
     </div>
@@ -173,9 +203,23 @@ const App = () => {
               <h2>{stock.shortName}</h2>
               <h4>Market Price: {stock.marketPrice}</h4>
               <h4>Market Change: {stock.marketChange}</h4>
-              <input type="text" placeholder="Enter new ticker" onChange={handleInputStock} />
-              <button onClick={(event) => {assignEditStock(stock)}}>Change Stock</button>
-              <button onClick={handleUpdate}>CONFIRM</button>
+              <button onClick={(event) => {toggleEditForm(stock)}}>
+                {stock._id === editStock._id ?
+                  seeEditForm ? 
+                    "Cancel Changes" 
+                  : "Edit"
+                : "Edit"}
+              </button>
+              {stock._id === editStock._id ?
+                seeEditForm ?
+                  <>
+                    <input type="text" placeholder="Enter new ticker" onChange={handleInputStock} />
+                    {seeConfirmEdit ?
+                      <button onClick={handleUpdate}>CONFIRM</button>
+                    : <button onClick={(event) => {assignEditStock(stock)}}>Change Stock</button>}
+                  </>
+                : null
+              : null }              
               <button onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
             </div>
           )
@@ -202,7 +246,7 @@ const App = () => {
     </div>
     </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
