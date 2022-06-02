@@ -166,84 +166,107 @@ const App = () => {
   return (
     <>
 
-    <div className = 'header'>
-      <h1>Stock[AID]</h1>
-      <h2>The Future of Personal Stock Management</h2>
+    <div className = 'jumbotron jumbotron-fluid py-3 my-0'>
+      <div className='container text-center'>
+        <h1 className='display-3'>Stock[AID]</h1>
+        <h2 className='lead'>The Future of Personal Stock Management</h2>
+      </div>
     </div>
 
-    <div className = 'addNew'>
-      {!toggleConfirmationForm ?
-        <form onSubmit={handleNewStock}>
-          <input id='input' type="text" placeholder='Search for ticker...' onChange={handleInputStock}/>
-          <br/>
-          <input type='submit' value='Queue Stock'/>
-        </form>
-      : null}
-      {toggleConfirmationForm ?
-        <div className='confirmation-form'>
-          <br/>
-          <h3 id='queued-stock'>Queued Stock</h3>
-          <h3 id='queued-details'>{newSymbol}</h3>
-          <h3 id='queued-details'>{newShortName}</h3>
-          <h3 id='queued-details'>{newMarketPrice}</h3>
-          <h3 id='queued-details'>{newMarketChange}</h3>
-          <button onClick={confirmStock}>CONFIRM STOCK</button>
-          <button onClick={handleToggleConfirmationForm}>CANCEL</button>
+    <div className = 'container text-center addNew my-1'>
+      <div className='row'>
+        <div className='col-4 mx-auto'>
+        {!toggleConfirmationForm ?
+          <form onSubmit={handleNewStock}>
+            <div className='form-group'>
+            <input className='form-control' id='input' type="text" placeholder='Search for ticker...' onChange={handleInputStock}/>
+            <input className='btn btn-outline-primary' type='submit' value='Queue Stock'/>
+            </div>
+          </form>
+        : null}
+        {toggleConfirmationForm ?
+          <div className='confirmation-form'>
+            <br/>
+            <h3 id='queued-stock'>Queued Stock</h3>
+            <h3 id='queued-details'>{newSymbol}</h3>
+            <h3 id='queued-details'>{newShortName}</h3>
+            <h3 id='queued-details'>{newMarketPrice}</h3>
+            <h3 id='queued-details'>{newMarketChange}</h3>
+            <button className='btn btn-success' onClick={confirmStock}>CONFIRM STOCK</button>
+            <button className='btn btn-danger' onClick={handleToggleConfirmationForm}>CANCEL</button>
+          </div>
+        : null}
         </div>
-      : null}
+      </div>
+
     </div>
 
-    <div className = 'portfolio'>
-      <h2 id='portfolio-header'>My Portfolio</h2>
-      <div className='card-container'>
+    <div className='portfolio'>
+      <div className = 'jumbotron jumbotron-fluid text-center py-5 my-0'>
+        <h2 id='portfolio-header'>My Portfolio</h2>
+      </div>
+
+      <div className='card-deck bg-dark'>
         {stocks.map((stock) => {
           return (
-            <div className='card' key={stock._id}>
-              <h3>{stock.symbol}</h3>
-              <h2>{stock.shortName}</h2>
-              <h4>Market Price: {stock.marketPrice}</h4>
-              <h4>Market Change: {stock.marketChange}</h4>
-              <button onClick={(event) => {toggleEditForm(stock)}}>
-                {stock._id === editStock._id ?
-                  seeEditForm ?
-                    "Cancel Changes"
-                  : "Edit"
-                : "Edit"}
-              </button>
-              {stock._id === editStock._id ?
-                seeEditForm ?
-                  <>
-                    <input type="text" placeholder="Enter new ticker" onChange={handleInputStock} />
-                    {seeConfirmEdit ?
-                      <button onClick={handleUpdate}>CONFIRM</button>
-                    : <button onClick={(event) => {assignEditStock(stock)}}>Change Stock</button>}
-                  </>
-                : null
-              : null }
-              <button onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
-            </div>
+              <div className='col-4'>
+                <div className='card text-center mx-5 my-3' key={stock._id}>
+                  <div className='card-body'>
+                    <h3>{stock.symbol}</h3>
+                    <h2>{stock.shortName}</h2>
+                    <h4>Market Price: {stock.marketPrice}</h4>
+                    <h4>Market Change: {stock.marketChange}</h4>
+                    <button className='btn btn-outline-warning' onClick={(event) => {toggleEditForm(stock)}}>
+                    {stock._id === editStock._id ?
+                      seeEditForm ?
+                        "Cancel Changes"
+                        : "Edit"
+                        : "Edit"}
+                        </button>
+                    {stock._id === editStock._id ?
+                      seeEditForm ?
+                        <>
+                          <input type="text" placeholder="Enter new ticker" onChange={handleInputStock} />
+                          {seeConfirmEdit ?
+                            <button className='btn btn-success' onClick={handleUpdate}>CONFIRM</button>
+                            : <button className='btn btn-outline-primary' onClick={(event) => {assignEditStock(stock)}}>Change Stock</button>}
+                            </>
+                            : null
+                            : null
+                          }
+                          <button className='btn btn-outline-danger' onClick = {(event) => {handleDeleteStock(stock)}}>Remove</button>
+                  </div>
+                </div>
+              </div>
           )
         })}
       </div>
     </div>
 
-    <div className = 'recommendations'>
-      <h2 id='recommendations-header'>Recommended Stocks</h2>
-        <div className='card-container'>
+    <div className = 'trending'>
+      <div className = 'jumbotron jumbotron-fluid text-center py-5 my-0'>
+        <h2 id='trending-header'>Trending Stocks</h2>
+        <p>updated June 6, 2022 @ 12:00pm EST</p>
+      </div>
+
+      <div className='card-deck  bg-dark'>
         {recommendations ?
-          <div className='rec-container'>
-            {recommendations.map((recommendation) => {
+            recommendations.map((recommendation) => {
               return (
-                <div className = 'card' key={recommendation._id}>
-                  <h3>{recommendation.ticker}</h3>
-                  <h2>{recommendation.name}</h2>
-                  <h4>Postion: #{recommendation.position}</h4>
+                <div className='col-4 m-0 p-3'>
+                  <div className ='card text-center w-auto h-100' key={recommendation._id}>
+                    <div className='card-body p-0'>
+                      <h3>{recommendation.ticker}</h3>
+                      <h2>{recommendation.name}</h2>
+                      <h4>Position: #{recommendation.position}</h4>
+                    </div>
+                  </div>
                 </div>
               )
-            })}
-          </div>
+            })
+
         : null}
-    </div>
+      </div>
     </div>
     </>
   )
