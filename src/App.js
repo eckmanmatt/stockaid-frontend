@@ -56,7 +56,7 @@ const App = () => {
           .request(`https://api.polygon.io/v2/aggs/ticker/${newSymbol}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`)
           .then(function (response) {
             setNewMarketPrice(response.data.results[0].c)
-            setNewMarketChange((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)
+            setNewMarketChange((((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)*100).toFixed(2))
           })
           .catch(function (error) {
             console.error(error);
@@ -119,7 +119,7 @@ const App = () => {
         .request(`https://api.polygon.io/v2/aggs/ticker/${newSymbol}/prev?adjusted=true&apiKey=93iCvd9wrOUYmz69ZzVj6w32X5rPT2bR`)
         .then(function (response) {
           setNewMarketPrice(response.data.results[0].c)
-          setNewMarketChange((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)
+          setNewMarketChange((((response.data.results[0].c - response.data.results[0].o) / response.data.results[0].o)*100).toFixed(2))
         })
         .catch(function (error) {
           console.error(error);
@@ -214,8 +214,8 @@ const App = () => {
                   <div className='card-body'>
                     <h3>{stock.symbol}</h3>
                     <h2>{stock.shortName}</h2>
-                    <h4>Market Price: {stock.marketPrice}</h4>
-                    <h4>Market Change: {stock.marketChange}</h4>
+                    <h4>Market Price: ${stock.marketPrice}</h4>
+                    <h4>Market Change: {stock.marketChange}%</h4>
                     <button className='btn btn-outline-warning' onClick={(event) => {toggleEditForm(stock)}}>
                     {stock._id === editStock._id ?
                       seeEditForm ?
