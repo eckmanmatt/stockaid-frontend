@@ -31,6 +31,7 @@ For styling the majority of the application, we used Bootstrap.
 
 When reworking how the API is called upon, we were faced with an object within an array, of the called results, being contained in a single string. We investigated that the best method to extract that would be to use the JSON.parse() function. This can be found in App.js on lines 71-73 and lines 135-137.
 
-![wireframe](https://user-images.githubusercontent.com/70616807/171883384-96b9716e-43a5-4e61-bf17-df240345dfba.jpg)
+![image](https://user-images.githubusercontent.com/70616807/171883797-5abec77b-8c11-4f90-b138-c8afeaf5c4a8.png)
+
 
 
