@@ -181,9 +181,9 @@ const App = () => {
   return (
     <>
 
-    <div className = 'jumbotron jumbotron-fluid py-3 my-0'>
+    <div className = 'jumbotron jumbotron-fluid py-3 my-0 bg-dark text-light'>
       <div className='container text-center'>
-        <h1 className='display-3'>Stock[AID]</h1>
+        <h1 className='display-3 font-weight-bold'>Stock[AID]</h1>
         <h2 className='lead'>The Future of Personal Stock Management</h2>
       </div>
     </div>
