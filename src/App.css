@@ -23,14 +23,19 @@
   justify-content: center;
   border: 2px solid black;
 }
-
-.addNew #input{
-  margin: 10px;
-  font-size: 20px;
+*/
+.footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
- */
+
 #queued-stock{
   text-decoration: underline;
+}
+a{
+  text-decoration: none;
+  color:black;
 }
 /*
 #queued-details{
