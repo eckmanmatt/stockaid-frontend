@@ -37,5 +37,3 @@ https://stockaid-portfolio-manager.herokuapp.com/
 
 
 When reworking how the API is called upon, we were faced with an object within an array, of the called results, being contained in a single string. We investigated that the best method to extract that would be to use the JSON.parse() function. This can be found in App.js on lines 71-73 and lines 135-137.
-
-testing a merge
