@@ -224,7 +224,7 @@ const App = () => {
       <div className='card-deck bg-dark'>
         {stocks.map((stock) => {
           return (
-              <div className='col-10 col-md-6 col-xl-4 p-0 mx-auto'>
+              <div className='col-4 p-0 m-1'>
                 <div className='card text-center m-5' key={stock._id}>
                   <div className='card-body'>
                     <h3>{stock.symbol}</h3>
