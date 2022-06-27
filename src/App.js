@@ -284,7 +284,7 @@ const App = () => {
       </div>
     </div>
     <div className='footer text-center p-0 bg-dark text-white'>
-      <h5 className="text-white p-0 text-center">Designed and Built by<br/><a href="https://www.linkedin.com/in/matthewpdowney/" target="_blank" className="fa fa-linkedin text-white"></a> <a href="https://github.com/mdowney421" target="_blank" className="fa fa-github text-white"></a>     Matt Downey and Matt Eckman     <a href="https://github.com/eckmanmatt" target="_blank" className="fa fa-github text-white"></a> <a href="https://www.linkedin.com/in/mattheweckman/" target="_blank" className="fa fa-linkedin text-white"></a>
+      <h5 className="text-white p-0 text-center">Designed and Built by<br/><a href="https://www.linkedin.com/in/matthewpdowney/" target="_blank" className="fa fa-linkedin text-white"></a> <a href="https://github.com/mdowney421" target="_blank" className="fa fa-github text-white"></a>     Matt Downey and Matt Eckman     <a href="https://github.com/eckmanmatt" target="_blank" className="fa fa-github text-white"></a> <a href="https://www.linkedin.com/in/mattheweckman/" target="_blank" className="fa fa-linkedin text-whitei"></a>
       </h5>
     </div>
     </>
