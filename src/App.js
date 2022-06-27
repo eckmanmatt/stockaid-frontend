@@ -268,9 +268,9 @@ const App = () => {
         {recommendations ?
             recommendations.map((recommendation) => {
               return (
-                <div className='col-4 m-0 p-3'>
-                  <div className ='card text-center w-auto h-100' key={recommendation._id}>
-                    <div className='card-body p-0' onMouseOver={(event) => {handleAddStock(recommendation)}} onMouseOut={handleMouseOut}>
+                <div className='col-3 m-0 p-3'>
+                  <div className ='card text-center w-auto h-auto' key={recommendation._id}>
+                    <div className='card-body p-1 h-auto' onMouseOver={(event) => {handleAddStock(recommendation)}} onMouseOut={handleMouseOut}>
                       <h3>{recommendation.ticker}</h3>
                       <h2>{recommendation.name}</h2>
                       <h4>Position: #{recommendation.position}</h4>
